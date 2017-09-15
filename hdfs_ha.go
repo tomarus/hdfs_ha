@@ -1,8 +1,10 @@
 package hdfs_ha
+
 import (
 	"fmt"
 	"strings"
 	"time"
+
 	"github.com/golang/protobuf/proto"
 	"github.com/samuel/go-zookeeper/zk"
 )
@@ -23,6 +25,10 @@ func New(zkServers string, zkTimeout time.Duration, nameservice string) (*HdfsHa
 	this.ZkConnection = zkConnection
 	this.ZkBreadCrumbPath = "/hadoop-ha/" + nameservice + "/" + BREADCRUMB_FILENAME
 	return this, nil
+}
+
+func (this *HdfsHa) ZKConn() *zk.Conn {
+	return this.ZkConnection
 }
 
 func (this *HdfsHa) GetActiveNameNode() (string, error) {
